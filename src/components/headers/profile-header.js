@@ -19,7 +19,7 @@ export default function ProfileHeader({ onLogout }) {
             },
           ]}
         >
-          <Text style={HEADER_STYLE.label_filter}>KINZ SAS</Text>
+          <Text style={HEADER_STYLE.label_filter}>KINZTRACK</Text>
         </View>
         <TouchableOpacity
             style={[

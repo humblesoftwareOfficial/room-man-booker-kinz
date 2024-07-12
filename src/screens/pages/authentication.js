@@ -176,7 +176,7 @@ export default function Login({ navigation }) {
     <SafeAreaView style={[SAFE_AREA_VIEW.container]}>
       <View style={PROFILE_STYLE.header}>
         <View>
-          <Text style={SYSTEM_STYLING.app_name}>KINZ SAS</Text>
+          <Text style={SYSTEM_STYLING.app_name}>KINZTRACK</Text>
         </View>
       </View>
       {isLoading ? (

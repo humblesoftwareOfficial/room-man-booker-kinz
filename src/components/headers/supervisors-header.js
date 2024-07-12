@@ -20,7 +20,7 @@ export default function SupervisorsListHeader({ onAdd }) {
             },
           ]}
         >
-          <Text style={HEADER_STYLE.label_filter}>KINZ SAS</Text>
+          <Text style={HEADER_STYLE.label_filter}>KINZTRACK</Text>
         </View>
         <TouchableOpacity
           style={[
