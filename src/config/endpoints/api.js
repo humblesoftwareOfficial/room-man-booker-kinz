@@ -1,8 +1,8 @@
 import axios from "axios";
 
 let api = axios.create({
-  // baseURL: "https://room-man-booker-service.onrender.com/",
-  baseURL: "http://192.168.1.12:3000",
+  baseURL: "https://room-man-booker-service.onrender.com/",
+  // baseURL: "http://192.168.1.12:3000",
 });
 
 export const Authentication = async (payload, token = "") => {
