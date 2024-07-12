@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "room-man-booker-kinz",
+    "name": "KINZ SAS",
     "slug": "room-man-booker-kinz",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,6 +22,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "111fe3d7-da9f-451d-b29f-84efcd83beb3"
+      }
+    },
+    "owner": "humblesoft"
   }
 }
