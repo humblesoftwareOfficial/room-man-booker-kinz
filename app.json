@@ -18,16 +18,40 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.humblesoft.roomsmanagementkinz",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "androidStatusBar": {
+      "backgroundColor": "#FFF",
+      "barStyle": "dark-content"
+    },
+    "androidNavigationBar": {
+      "backgroundColor": "#152A2D"
+    },
+    "plugins": [
+      "expo-build-properties",
+      "expo-font",
+      "expo-secure-store",
+      "expo-notifications",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "111fe3d7-da9f-451d-b29f-84efcd83beb3"
       }
     },
-    "owner": "humblesoft"
+    "owner": "humblesoft",
+    "notification": {
+      "icon": "./assets/notifications.png"
+    }
   }
 }

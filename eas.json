@@ -1,0 +1,23 @@
+{
+  "build": {
+    "development": {
+      "android": {
+        "buildType": "apk"
+      },
+      "channel": "development"
+    },
+    "beta": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
+      },
+      "channel": "beta"
+    },
+    "preview": {
+      "developmentClient": true,
+      "channel": "preview"
+    },
+    "production": {
+      "channel": "production"
+    }
+  }
+}
