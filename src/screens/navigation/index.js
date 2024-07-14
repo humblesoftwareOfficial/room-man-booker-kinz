@@ -1,12 +1,12 @@
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useContext, useEffect, useState } from "react";
-import { SCREENS_NAME } from "../../utils/system";
+import { PLATFORM_APP_NAME, SCREENS_NAME } from "../../utils/system";
 import { default as Home } from "../pages/home";
 import RoomDetails from "../pages/room-details";
 
 import UserContext from "../../config/contexts/user";
-import { AddItemToStorage, GetItemToStorage } from "../../utils/local-database";
+import { AddItemToStorage, GetItemToStorage, removeStorageInfos } from "../../utils/local-database";
 import Login from "../pages/authentication";
 import FullLoadingContainer from "../../components/loaders/full-loading";
 import NewHouse from "../pages/houses/new-house";
@@ -63,6 +63,7 @@ export default function Navigation() {
         const company_name = await GetItemToStorage(
           "_company_name"
         );
+
         const company_description = await GetItemToStorage(
           "_company_description"
         );
@@ -76,7 +77,12 @@ export default function Navigation() {
         const house_description = await GetItemToStorage(
           "_house_description"
         );
-
+        if (company_name !== PLATFORM_APP_NAME) {
+          await removeStorageInfos();
+          setIsAuthenticated(false);
+          setIsLoading(false);
+          return;
+        }
         setAccount({
           firstName,
           lastName,
