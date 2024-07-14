@@ -3,7 +3,13 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import RoomCard from "../cards/room-card";
 import { FlatList } from "react-native-gesture-handler";
 import { APP_COLORS } from "../../styling/color";
-import { EAccountType, EReservationStatus, SCREENS_NAME, ShowToastMessage, generateKey } from "../../utils/system";
+import {
+  EAccountType,
+  EReservationStatus,
+  SCREENS_NAME,
+  ShowToastMessage,
+  generateKey,
+} from "../../utils/system";
 import BottomModal from "../modals/bottom-modal";
 import CustomButton from "../buttons/custom-button";
 import UserContext from "../../config/contexts/user";
@@ -109,7 +115,10 @@ export default function RoomsList({ navigation, house = null }) {
 
   const onOpenPlace = (place) => {
     try {
-      if (account.accountType === EAccountType.ADMIN || place.house.code === account.house.code) {
+      if (
+        account.accountType === EAccountType.ADMIN ||
+        place.house.code === account.house.code
+      ) {
         setSelectedPlace(place);
       }
     } catch (error) {
@@ -167,19 +176,22 @@ export default function RoomsList({ navigation, house = null }) {
         by: account.code,
         place: value.code,
         currentStatus: ROOM_STATUS.AVAILABLE,
-      }
+      };
       const response = await UpdateRoom(payload, account.access_token);
       const { success, data } = response.data;
       if (success) {
-        
         onRefreshData();
       }
     } catch (error) {
       console.log({ error });
       setIsLoading(false);
-      ShowToastMessage("Une erreur est survenue. Veuillez réessayer.", APP_COLORS.RED_COLOR.color, APP_COLORS.WHITE_COLOR.color)
+      ShowToastMessage(
+        "Une erreur est survenue. Veuillez réessayer.",
+        APP_COLORS.RED_COLOR.color,
+        APP_COLORS.WHITE_COLOR.color
+      );
     }
-  }
+  };
 
   const goToReservationDetails = () => {
     try {
@@ -192,9 +204,9 @@ export default function RoomsList({ navigation, house = null }) {
       });
     } catch (error) {
       console.log({ error });
-      console.log('herreerrrrr')
+      console.log("herreerrrrr");
     }
-  }
+  };
 
   const renderRoomDetailsInfos = useCallback(
     () => (

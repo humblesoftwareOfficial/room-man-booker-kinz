@@ -50,10 +50,11 @@ export default function NewHouse({ navigation }) {
           position,
         };
         const response = await AddHouse(payload, account.access_token);
-        const { success } = response.data;
+        const { success, message, error } = response.data;
         if (success) {
           navigation.goBack();
         } else {
+          Alert.alert("Erreur", message);
           setIsLoading(false);
         }
       } else {

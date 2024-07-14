@@ -74,6 +74,9 @@ export default function ReservationsRequestsList({ navigation, selectedStatus, r
         limit: 10,
         status: selectedStatus,
         by: account.code,
+        ...(account?.accountType !== EAccountType.ADMIN && {
+          house: account.house.code,
+        })
       };
       const response = await GetRequests(payload, account.access_token);
       const { success, data, message } = response.data;
@@ -138,7 +141,9 @@ export default function ReservationsRequestsList({ navigation, selectedStatus, r
 
   const onShowRequest = (value) => {
     try {
-      setSelectedRequest(value);
+      if (account.accountType === EAccountType.ADMIN || value.place.house.code === account.house.code) {
+        setSelectedRequest(value);
+      }
     } catch (error) {
       console.log({ error });
     }
@@ -350,7 +355,6 @@ export default function ReservationsRequestsList({ navigation, selectedStatus, r
       {isLoading ? (
         <FullLoadingContainer />
       ) : (
-        <>
           <FlatList
             style={{ backgroundColor: APP_COLORS.LIGHT_COLOR.color }}
             disableIntervalMomentum
@@ -388,7 +392,6 @@ export default function ReservationsRequestsList({ navigation, selectedStatus, r
               )
             }
           />
-        </>
       )}
       <BottomModal
         showModal={openInfos}
