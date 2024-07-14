@@ -111,8 +111,7 @@ export default function Login({ navigation }) {
           password,
         };
         const response = await Authentication(payload);
-        const { data, success, message } = response.data;
-        console.log({data})
+        const { data, success, message: endpointMessage, error } = response.data;
         if (success) {
           if (data.company) {
             await AddItemToStorage("_company_code", data.company.code);
@@ -155,10 +154,9 @@ export default function Login({ navigation }) {
             Alert.alert("INFO", "Vous n'êtes affiliés à aucune compagnie.");
           }
         } else {
-          console.log(response.data);
           Alert.alert(
-            "",
-            "Informations d'identification incorrectes. Réessayer!"
+            endpointMessage || "",
+            error
           );
         }
         setIsLoading(false);

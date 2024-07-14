@@ -1,6 +1,8 @@
 import Toast from "react-native-root-toast";
 import { APP_COLORS } from "../styling/color";
 
+export const PLATFORM_APP_NAME = "KINZ SAS";
+
 export const SCREENS_NAME = {
   Home: "Home",
   RoomDetails: "RoomDetails",

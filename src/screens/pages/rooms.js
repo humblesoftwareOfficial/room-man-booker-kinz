@@ -41,7 +41,7 @@ export default function Rooms({ navigation }) {
       const payload = {
         companies: [account.company.code],
         page: 1,
-        limit: 10,
+        limit: 25,
       };
       const response = await GetHousesList(payload, account.access_token);
       const { success, data } = response.data;

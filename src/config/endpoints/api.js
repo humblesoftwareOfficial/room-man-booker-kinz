@@ -1,9 +1,12 @@
 import axios from "axios";
+import { PLATFORM_APP_NAME } from "../../utils/system";
 
 let api = axios.create({
-  baseURL: "https://room-man-booker-service.onrender.com/",
-  // baseURL: "http://192.168.1.12:3000",
+  // baseURL: "https://room-man-booker-service.onrender.com/",
+  baseURL: "http://192.168.1.8:3000",
 });
+
+api.defaults.headers["pm-app-id-store"] = PLATFORM_APP_NAME;
 
 export const Authentication = async (payload, token = "") => {
   return await api.post(`/authentication/login`, payload);
@@ -12,6 +15,11 @@ export const Authentication = async (payload, token = "") => {
 export const UpdatePushTokens = async (payload, token = "") => {
   api.defaults.headers["Authorization"] = `Bearer ${token}`;
   return await api.post("/users/pushtokens", payload);
+};
+
+export const RemovePushTokens = async (payload, token = "") => {
+  api.defaults.headers["Authorization"] = `Bearer ${token}`;
+  return await api.post("/users/pushtokens/remove", payload);
 };
 
 export const GetHousesList = async (payload, token = "") => {
@@ -138,6 +146,7 @@ const apis = {
   DeclineReservationRequest,
   ExtendReservation,
   UpdateMediasPlace,
-  GetCompanyStatsRecap
+  GetCompanyStatsRecap,
+  RemovePushTokens
 };
 export default apis;

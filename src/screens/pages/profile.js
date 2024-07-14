@@ -10,6 +10,8 @@ import { APP_COLORS } from "../../styling/color";
 import UserContext from "../../config/contexts/user";
 import { EAccountType, SCREENS_NAME, truncateText } from "../../utils/system";
 import { removeStorageInfos } from "../../utils/local-database";
+import { registerForPushNotificationsAsync } from "../../utils/token";
+import { RemovePushTokens } from "../../config/endpoints/api";
 
 export default function Profile({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,6 +27,22 @@ export default function Profile({ navigation }) {
   const onLogout = async () => {
     try {
       setIsLoading(true);
+      const token = await registerForPushNotificationsAsync();
+      if (token) {
+        try {
+          await RemovePushTokens(
+            {
+              user: account.code,
+              tokenValue: token,
+            },
+            account.access_token
+          );
+        } catch (error) {
+          console.log({ error });
+          setIsLoading(false);
+          return;
+        }
+      }
       await removeStorageInfos();
       setAccount(null);
       setIsAuthenticated(false);
