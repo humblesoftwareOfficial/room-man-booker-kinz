@@ -2,8 +2,8 @@ import axios from "axios";
 import { PLATFORM_APP_NAME } from "../../utils/system";
 
 let api = axios.create({
-  // baseURL: "https://room-man-booker-service.onrender.com/",
-  baseURL: "http://192.168.1.8:3000",
+  baseURL: "https://room-man-booker-service.onrender.com/",
+  // baseURL: "http://192.168.1.8:3000",
 });
 
 api.defaults.headers["pm-app-id-store"] = PLATFORM_APP_NAME;

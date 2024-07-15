@@ -12,6 +12,7 @@ const CustomTabBar = ({
   filterCategories = [],
   onChangeTab,
   defaultActiveTab = 0,
+  filterStatus = []
 }) => {
   const [activeTab, setActiveTab] = useState(defaultActiveTab || 0);
 
@@ -25,6 +26,7 @@ const CustomTabBar = ({
         key={Boolean(tabs?.length) && tabs[activeTab].code}
         navigation={navigation}
         filterCategories={filterCategories}
+        filterStatus={filterStatus}
       />
     ),
     [activeTab, filterCategories]

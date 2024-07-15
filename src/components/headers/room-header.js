@@ -49,7 +49,7 @@ export default function RoomHeader({
         >
           <MaterialCommunityIcons
             name="reload"
-            size={24}
+            size={18}
             color={APP_COLORS.PRIMARY_COLOR.color}
           />
         </TouchableOpacity>
@@ -62,8 +62,23 @@ export default function RoomHeader({
           ]}
           onPress={() => goToRequests()}
         >
-          <AntDesign name="addusergroup" size={24} color={APP_COLORS.WHITE_COLOR.color} />
+          <AntDesign name="addusergroup" size={18} color={APP_COLORS.WHITE_COLOR.color} />
         </TouchableOpacity>
+        <TouchableOpacity
+            style={[
+              HEADER_STYLE.main_right,
+              {
+                // backgroundColor: APP_COLORS.SECONDARY_COLOR.color,
+              },
+            ]}
+            onPress={() => onShowFilter()}
+          >
+            <Ionicons
+              name="filter"
+              size={18}
+              color={APP_COLORS.ORANGE_COLOR.color}
+            />
+          </TouchableOpacity>
         {account?.accountType === EAccountType.ADMIN && (
           <TouchableOpacity
             style={[
@@ -76,7 +91,7 @@ export default function RoomHeader({
           >
             <Entypo
               name="plus"
-              size={24}
+              size={18}
               color={APP_COLORS.BLACK_COLOR.color}
             />
           </TouchableOpacity>

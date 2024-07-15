@@ -3,7 +3,11 @@ import { AntDesign, FontAwesome5, MaterialCommunityIcons, MaterialIcons } from "
 export const ROOM_STATUS = {
   AVAILABLE: "AVAILABLE",
   TAKEN: "TAKEN",
-  OFF: "OFF",
+};
+
+export const ROOM_STATUS_TRADUCTION = {
+  AVAILABLE: "Disponible",
+  TAKEN: "Occupée",
 };
 
 export const ROOM_PROPERTIES = {

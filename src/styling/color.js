@@ -31,5 +31,8 @@ export const APP_COLORS = StyleSheet.create({
   },
   YELLOW_COLOR: {
     color: "#FFC93C",
+  },
+  ORANGE_COLOR: {
+    color: "#FF8C3F"
   }
 });

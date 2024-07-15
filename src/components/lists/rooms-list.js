@@ -17,10 +17,12 @@ import { GetRooms, UpdateRoom } from "../../config/endpoints/api";
 import FullLoadingContainer from "../loaders/full-loading";
 import { SYSTEM_STYLING } from "../../styling/system";
 import { ROOM_STATUS } from "../../utils/rooms";
+import { useDidMountEffect } from "../../config/hooks/useDidMountEffect";
+import { FontAwesome6 } from "@expo/vector-icons";
 
 const MODAL_HEIGHT = Math.ceil(Dimensions.get("window").height / 2.7);
 
-export default function RoomsList({ navigation, house = null }) {
+export default function RoomsList({ navigation, house = null, filterStatus = [] }) {
   const [rooms, setRooms] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -46,6 +48,10 @@ export default function RoomsList({ navigation, house = null }) {
     }
   }, [rooms]);
 
+  useDidMountEffect(() => {
+    onRefreshData();
+  }, [filterStatus])
+
   useEffect(() => {
     if (selectedPlace) setOpenInfos(true);
     else setOpenInfos(false);
@@ -57,6 +63,7 @@ export default function RoomsList({ navigation, house = null }) {
         page,
         limit: 10,
         houses: [house.code],
+        status: filterStatus,
       };
       const response = await GetRooms(payload, account.access_token);
       const { success, data } = response.data;
@@ -261,7 +268,8 @@ export default function RoomsList({ navigation, house = null }) {
       {isLoading ? (
         <FullLoadingContainer />
       ) : (
-        <FlatList
+        Boolean(rooms?.length) ? (
+          <FlatList
           style={{ backgroundColor: APP_COLORS.LIGHT_COLOR.color }}
           disableIntervalMomentum
           data={rooms || []}
@@ -278,25 +286,22 @@ export default function RoomsList({ navigation, house = null }) {
             <RefreshControl
               refreshing={isRefreshing}
               onRefresh={onRefreshData}
-              tintColor={APP_COLORS.PRIMARY_COLOR.color}
+              tintColor={APP_COLORS.YELLOW_COLOR.color}
               progressBackgroundColor={APP_COLORS.PRIMARY_COLOR.color}
-              colors={[APP_COLORS.PRIMARY_COLOR.color]}
+              colors={[APP_COLORS.YELLOW_COLOR.color]}
             />
           }
           onRefresh={onRefreshData}
           onEndReached={() => onEndReached()}
           refreshing={isRefreshing}
           showsVerticalScrollIndicator={false}
-          //   ListHeaderComponent={<Sponsorized onPressItem={onOpenPlace} />}
-          //   ListFooterComponent={
-          //     isRetreivingData && (
-          //       <ActivityIndicator
-          //         size="small"
-          //         color={APP_COLORS.YELLOW_COLOR.color}
-          //       />
-          //     )
-          //   }
         />
+        ): (
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center"}}>
+            <FontAwesome6 name="beer-mug-empty" size={40} color="black" />
+            <Text>Aucune chambre trouvée</Text>
+          </View>
+        )
       )}
       <BottomModal
         showModal={openInfos}
