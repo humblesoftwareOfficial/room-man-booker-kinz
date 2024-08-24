@@ -6,7 +6,7 @@ import ReservationsRequestsList from "../../../components/lists/reservations-req
 import { REQUEST_STYLING, ROOM_DETAILS_STYLING } from "../../../styling/cards";
 import { APP_COLORS } from "../../../styling/color";
 import BackButton from "../../../components/buttons/back-button";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomModal from "../../../components/modals/bottom-modal";
 import {
   EReservationStatus,
@@ -16,15 +16,20 @@ import {
 import { NEW_ROOM_STYLE } from "../../../styling/rooms";
 import CustomButton from "../../../components/buttons/custom-button";
 import { HEADER_STYLE } from "../../../styling/headers";
+import DefaultInput from "../../../components/inputs/default-input";
 
 const MODAL_HEIGHT = Math.ceil(Dimensions.get("window").height / 1.5);
+const MODAL_SEARCH_HEIGHT = Math.ceil(Dimensions.get("window").height / 1.3);
 
 export default function ReservationsRequests({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState([]);
   const [selectedStatusFilter, setSelectedStatusFilter] = useState([]);
   const [openModalFilter, setOpenModalFilter] = useState(false);
+  const [openModalSearch, setOpenModalSearch] = useState(false);
   const [reload, setReload] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [validatedSearchTerm, setValidatedSearchTerm] = useState("");
 
   const renderStatusFilter = useCallback(
     () => (
@@ -81,6 +86,15 @@ export default function ReservationsRequests({ navigation }) {
     } catch (error) {}
   };
 
+  const onApplySearchTerm = () => {
+    try {
+      setOpenModalSearch(false);
+      setValidatedSearchTerm(searchTerm);
+    } catch (error) {
+      
+    }
+  }
+
   const onSelectStatus = (property) => {
     try {
       const status = selectedStatus || [];
@@ -95,6 +109,25 @@ export default function ReservationsRequests({ navigation }) {
       console.log({ error });
     }
   };
+
+  const renderInputSearch = () => (
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        <DefaultInput
+          placeholder="(Téléphone, nom, cni, ...)"
+          value={searchTerm}
+          onValueChange={(value) => setSearchTerm(value)}
+        />
+        <CustomButton
+          label="Rechercher"
+          bgColor={APP_COLORS.PRIMARY_COLOR.color}
+          textColor={APP_COLORS.WHITE_COLOR.color}
+          borderColor={APP_COLORS.BLACK_COLOR.color}
+          onClick={onApplySearchTerm}
+        />
+      </View>
+    </View>
+  );
 
   return (
     <SafeAreaView
@@ -114,13 +147,30 @@ export default function ReservationsRequests({ navigation }) {
           <TouchableOpacity
             style={[
               HEADER_STYLE.main_right,
+              {
+                backgroundColor: APP_COLORS.WHITE_COLOR.color,
+                margin: 0,
+                marginLeft: 7,
+              },
+            ]}
+            onPress={() => setOpenModalSearch(true)}
+          >
+            <Feather
+              name="search"
+              size={18}
+              color={APP_COLORS.PRIMARY_COLOR.color}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              HEADER_STYLE.main_right,
               { backgroundColor: APP_COLORS.YELLOW_COLOR.color, margin: 0 },
             ]}
             onPress={() => setOpenModalFilter(true)}
           >
             <Ionicons
               name="filter"
-              size={24}
+              size={18}
               color={APP_COLORS.BLACK_COLOR.color}
             />
           </TouchableOpacity>
@@ -137,7 +187,7 @@ export default function ReservationsRequests({ navigation }) {
           >
             <MaterialCommunityIcons
               name="reload"
-              size={24}
+              size={18}
               color={APP_COLORS.WHITE_COLOR.color}
             />
           </TouchableOpacity>
@@ -147,6 +197,7 @@ export default function ReservationsRequests({ navigation }) {
         navigation={navigation}
         selectedStatus={selectedStatusFilter}
         reload={reload}
+        searchTerm={validatedSearchTerm}
       />
       <BottomModal
         showModal={openModalFilter}
@@ -155,6 +206,17 @@ export default function ReservationsRequests({ navigation }) {
         }}
         content={renderStatusFilter()}
         minHeight={MODAL_HEIGHT}
+        backgroundColor={APP_COLORS.WHITE_COLOR.color} //{APP_COLORS.LIGHT_COLOR.color}
+        sliderBackgroundColor={APP_COLORS.BLACK_COLOR.color} //{APP_COLORS.PRIMARY_COLOR.color}
+        overlay="rgba(0, 0, 0, 0.7)"
+      />
+      <BottomModal
+        showModal={openModalSearch}
+        onClose={() => {
+          setOpenModalSearch(false);
+        }}
+        content={renderInputSearch()}
+        minHeight={MODAL_SEARCH_HEIGHT}
         backgroundColor={APP_COLORS.WHITE_COLOR.color} //{APP_COLORS.LIGHT_COLOR.color}
         sliderBackgroundColor={APP_COLORS.BLACK_COLOR.color} //{APP_COLORS.PRIMARY_COLOR.color}
         overlay="rgba(0, 0, 0, 0.7)"

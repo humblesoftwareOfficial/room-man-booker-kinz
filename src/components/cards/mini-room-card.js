@@ -13,7 +13,7 @@ import {
 const MiniRoomCard = ({ data = {}, onClick, showProperty = false, price = null, priceTagColor= APP_COLORS.PRIMARY_COLOR.color }) => {
   const getStatusColor = () => {
     try {
-      switch (data.currentStatus) {
+      switch (data?.currentStatus) {
         case ROOM_STATUS.AVAILABLE:
           return APP_COLORS.GREEN_COLOR.color;
         case ROOM_STATUS.TAKEN:
@@ -30,7 +30,7 @@ const MiniRoomCard = ({ data = {}, onClick, showProperty = false, price = null, 
 
   const getStatusText = () => {
     try {
-      switch (data.currentStatus) {
+      switch (data?.currentStatus) {
         case ROOM_STATUS.AVAILABLE:
           return "Disponible";
         case ROOM_STATUS.TAKEN:
@@ -73,7 +73,7 @@ const MiniRoomCard = ({ data = {}, onClick, showProperty = false, price = null, 
       onPress={() => onClick(data)}
     >
       <View style={ROOM_CARD_STYLING.image}>
-        {Boolean(data.medias?.length) && (
+        {Boolean(data?.medias?.length) && (
           <ImageBackground
             ImageBackground
             source={{ uri: data?.medias[0].url }}
@@ -83,9 +83,9 @@ const MiniRoomCard = ({ data = {}, onClick, showProperty = false, price = null, 
         )}
       </View>
       <View style={ROOM_CARD_STYLING.infos}>
-        <Text style={ROOM_CARD_STYLING.title}>{data.house?.name}</Text>
+        <Text style={ROOM_CARD_STYLING.title}>{data?.house?.name}</Text>
         <Text style={ROOM_CARD_STYLING.description}>
-          {truncateText(data.description, 150)}
+          {truncateText(data?.description, 150)}
         </Text>
         <View style={ROOM_CARD_STYLING.status}>
           <FontAwesome6 name="dot-circle" size={24} color={getStatusColor()} />
@@ -122,7 +122,7 @@ const MiniRoomCard = ({ data = {}, onClick, showProperty = false, price = null, 
                 },
               ]}
             >
-              {formatPrice(`${price || data.prices[0].value || ""}`)} XOF
+              {formatPrice(`${price || data?.prices[0]?.value || ""}`)} XOF
             </Text>
           </View>
           <View style={{ flex: 1 }}></View>

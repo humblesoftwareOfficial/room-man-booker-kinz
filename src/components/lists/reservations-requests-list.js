@@ -23,7 +23,7 @@ import { ActivityIndicator } from "react-native-paper";
 
 const MODAL_HEIGHT = Math.ceil(Dimensions.get("window").height / 2.7);
 
-export default function ReservationsRequestsList({ navigation, selectedStatus, reload = 0 }) {
+export default function ReservationsRequestsList({ navigation, selectedStatus, reload = 0, searchTerm = "" }) {
   const [requests, setRequests] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -60,7 +60,7 @@ export default function ReservationsRequestsList({ navigation, selectedStatus, r
     } else {
       setPage(1);
     }
-  }, [selectedStatus]);
+  }, [selectedStatus, searchTerm]);
 
   useEffect(() => {
     if (selectedRequest) setOpenInfos(true);
@@ -73,6 +73,7 @@ export default function ReservationsRequestsList({ navigation, selectedStatus, r
         page,
         limit: 10,
         status: selectedStatus,
+        searchTerm,
         by: account.code,
         ...(account?.accountType !== EAccountType.ADMIN && {
           house: account.house.code,
